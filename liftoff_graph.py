@@ -1,5 +1,6 @@
 import final_value
 import numpy as np
+from tqdm import tqdm
 
 
 def angle_from_vectors(u, v):
@@ -11,10 +12,10 @@ if __name__ == "__main__":
 
     results = dict()
 
-    for phi in np.linspace(0, np.pi, 200):
+    for phi in tqdm(np.linspace(0, np.pi, 100)):
 
         qa = np.array([1, 0])
-        qb = np.array([np.cos(phi), np.sin(phi)])
+        qb = 1.001*np.array([np.cos(phi), np.sin(phi)])
         qc = -qa - qb
 
         alphaab = angle_from_vectors(qa, qb)
@@ -29,7 +30,7 @@ if __name__ == "__main__":
             q2=(qa[1], qb[1], qc[1]),
             gamma=0.60,
             avr="energetic",
-            tmax=100.0,
+            tmax=1000.0,
         )
         results[phi] = {"assymetry": min(fin) / max(fin), "alphamin": alphamin}
 
@@ -37,7 +38,7 @@ if __name__ == "__main__":
 
     lists = [(v["alphamin"], v["assymetry"]) for (k, v) in sorted(results.items())]
     x, y = zip(*lists)
-    plt.plot(x, y, "x-")
+    plt.plot(x, y, "o")
     plt.xlabel("smallest angle")
     plt.ylabel("min C / max C")
     plt.ylim([0, 1])

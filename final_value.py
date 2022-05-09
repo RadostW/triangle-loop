@@ -97,7 +97,7 @@ def trajectory(l, q1, q2, gamma, avr, tmax=100.0, c0=[1.1, 1.2, 1.3]):
         c0,
         args=(l, q1, q2, gamma, avr),
         dense_output=True,
-        rtol=1e-5,
+        #rtol=1e-5,
     )
     return traj
 
